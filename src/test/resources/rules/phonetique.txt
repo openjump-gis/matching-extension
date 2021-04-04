@@ -1,0 +1,574 @@
+################################################################################
+#
+# RÈGLES DE SUBSTITUTION DESTINÉES À PRODUIRE UNE VERSION PHONETIQUE
+# D'UN MOT DE LANGUE FRANÇAISE
+#
+# Ces règles sont utilisées par la classe fr.m3.util.text.ReplacePatternRuleSet
+#
+# Les lignes vides ou commençant par # sont ignorées
+#
+# Les autres lignes doivent être de la forme
+# "regular_expression"="replacement_string"
+#
+# Version 0.2 (2011-05-01)
+#
+################################################################################
+
+################################################################################
+# 0 - CONVENTIONS UTILISEES POUR LA TRANSCRIPTION PHONETIQUE
+################################################################################
+#
+# Règles permettant de transcrire un mot en phonèmes
+# décrivant approximativement sa prononciation
+# On suppose que le mot en entrée est écrit en majuscules
+# non accentuées
+#
+# Les conventions adoptées sont les suivantes :
+#
+# son     --> transcription
+# a       --> a
+# b       --> b
+# c, s, z --> s
+# c, k, q --> k
+# d       --> d
+# e, é, è, ë, ë, eu, oe --> e
+# f       --> f
+# g, j    --> j
+# gn      --> ñ
+# g(u)    --> g
+# h       -->
+# i       --> i
+# j       --> j
+# k, q    --> k
+# l       --> l
+# (i)ll   --> i
+# m       --> m
+# n       --> n
+# o, ô    --> o
+# p       --> p
+# q       --> k
+# r       --> r
+# s, z    --> s
+# t       --> t
+# u       --> u (ou et u sont confondus)
+# v       --> v
+# w       --> w
+# x       --> ks
+# y       --> i
+# z       --> z
+# gn      --> ñ (utilisé aussi pour transcrire les terminaisons en ing)
+# ch      --> h
+# an      --> à
+# in      --> ì
+# on      --> ò
+# ou      --> u
+#
+# Webographie
+# http://www.lexique.org/
+#
+################################################################################
+
+# Contraintes utilisées
+#
+
+################################
+# mots entiers
+################################
+
+# Mots où le E suivant le I est muet
+"\bSCIERIES?\b" = "siri"
+"\bRIESLING\b"  = "risliñ"
+
+# Prononciations particulières
+"\bAGEN\b"  = "ajì"
+"\bSAONE\b" = "son"
+
+# X muet dans Saint-Prix
+"\bPRIX\b" = "pri"
+
+# X final se prononçant s
+"\bSIX\b"  = "sis"
+"\bDIX\b"  = "dis"
+
+# Article contracté
+"\bAUX?\b" = "o"
+
+# Article suivi d'une apostrophe
+"\bD (?=[AEIOUYH])" = "d"
+"\bL (?=[AEIOUYH])" = "l"
+
+################################
+# mots entiers (e final non muet)
+################################
+
+# Petits mots contenant un e ou é (le, les...)
+"(?<=\b[BCDFGHJKLMNPQRSTVZ])ES?\b" = "e"
+
+"ANDRE" = "àdre"
+
+################################
+# préfixes et suffixes contenant
+# des lettres muettes d'origine
+# etymologique
+################################
+
+# Mot bois suivi d'une consonne (sauf C, H et S)
+"BOIS(?=[AEIOUYCHS])" = "boa"
+
+# G muet de bourg (sauf dans bourg en bresse, tant pis)
+"BOURG(?![AEIOUY])" = "bur"
+
+# Mot champ suivi d'une consonne
+# note : cette règle a pour effet de supprimer le r de *champr*
+"(?<=CH?)AMP(?![AEIOUYH])" = "à"
+
+# T muet de FONT
+# note : cette règle a pour effet de supprimer le r de *fontr*
+"FONT?(?![AEIOUY])" = "fò"
+
+# Gerardmer -> Gerarmé
+"GERARD(?=[BCDFGHJKLMNPQRSTVWXZ])" = "jerar"
+
+# C muet de jonc, ajonc
+"JONC\b"  = "jò"
+
+# Isle ou île éventuellement précédé d'un article agglutiné
+"(?<=\b[ldLD]?)ISLE" = "il"
+
+# Mot bois suivi d'une consonne (sauf C, H et S)
+"LONG(?![AEIOUY])" = "lò"
+
+# P muet de LOUP
+# note : cette règle a pour effet de supprimer le r de *loupr*
+"LOUP?(?![AEIOUYH])" = "lu"
+
+# T muet de MONT suivi d'une consonne
+"(?<=M)ONT(?=[^AEHIOUY])"="ò"
+
+# Allemand
+"EN(?=.*(WILLER|INGEN|HEIM|BACH|THAL|DORF)\b)" = "en"
+"WILLER\b" = "viler"
+"INGEN\b"  = "ingen"
+"HEIM\b"   = "aym"
+"BACH\b"   = "bar"
+"WALD\b"   = "vald"
+"FELD\b"   = "feld"
+
+
+"S?CEAUX?"  = "so"
+
+################################
+# 6 lettres consécutives
+# en début ou en fin de mot
+################################
+
+"GNIERS?\b" = "ñe"
+"QUEUES?\b" = "ke"
+
+# Lettres finales muettes après (E)AU (THIBAULT, RENAUD, BADAUDS)
+"E?AUL?[DT]S?\b" = "o"
+
+# Mot se terminant par ueil, ueille
+"C?CUEILL?" = "key"
+# Mot se terminant par le son y (ail, eil, aille, eille, ouilles,..)
+"(?<=[AEU])IL(LE)?S?\b" = "y"
+
+# Phonèmes composés (déjà pris en compte dans le précédent ?)
+# "EUIL(LE)?S?\b" = "ei"
+
+"ILLIERS?\b" = "ilye"
+
+################################
+# 6 lettres consécutives
+################################
+
+"(?<=[^AEIOUY])IEMENTS?" = "imà"
+
+# Par simplification, pas de distinction entre gnie et gne
+"GNI?EUX?"  = "ñe"
+
+################################
+# 5 lettres consécutives
+# en début ou en fin de mot
+################################
+
+"AIENT\b"   = "e"
+"TEMPS\b"   = "tà"
+
+# son in final (AIN, AIM, EIN, EIM, AINS, AINT, AING, AINTS, AINGS...)
+"[AE]I[NM][GT]S?\b" = "ì"
+
+# son ing germanique
+"(?<=[^AEIOUY])ING\b" = "iñ"
+
+
+"HIERS?\b" = "ie"
+"(?<=[^AEIHOUY])IERS?\b" = "ie"
+
+# son oi final (ex. doigts)
+"OIG?T?S?X?\b" = "oa"
+
+# Son a-n et non pas an
+"ANN?ES?\b"    = "an"
+
+################################
+# 5 lettres consécutives
+################################
+
+"OESCH"   = "eh"
+"OESENN?" = "esen"
+"SCHOE"   = "he"
+# Trouvé principalement dans français(e) mais aussi vançais
+"ANCAI"   = "àse"
+
+# Gentiane
+"ENTIA"   = "àsia"
+
+# séquence illi
+
+# illi dont le premier i se prononce i
+# villiers, villières, roquebillières, billiat, illiat, premillieu, hillion
+"(?<=([GQ]U)?I)LL[IY](?=[AEOUaeouàò])"     = "ly"
+# cas particulier de ing qui donne auss le son l (iling) : zilling, willing
+"(?<=([GQ]U)?I)LLINGS?\b"               = "liñ"
+# dans les autres cas LLI ou plus souvent LLY va se prononcer yi
+# Sillingy, Chilly, Fillinge, Raillimont
+"(?<=([GQ]U)?I)LL[IY]"     = "yi"
+
+# illi dont le premier i ne se prononce pas i
+# son ou : bouillie, rouillie
+"OUILL(?=I)"        = "uy"
+# son a ou e Saillisel, Raillimont, Treillières
+"(?<=[AE]U?)ILL[IY](?=[AEOUaeouàò])" = "y"
+"(?<=[AE]U?)ILL[IY]"                 = "yi"
+
+
+################################
+# 4 lettres consécutives
+# en début ou en fin de mot
+################################
+
+# Son final i
+"(?<=H)IES\b"  = "i"
+"ICTS?\b"      = "i"
+
+# Son finale e, é ou è
+"AIE(S|NT)?\b" = "e"
+"ES?TS?\b"     = "e"
+
+# Son final on (transcrit ò)
+"O[NM][BDST]S?\b" = "ò"
+"IO[NM]S?\b"      = "iyò"
+
+# Son final in (transcrit ì)
+"[AE]I[NM]S?\b" = "ì"
+"I[NM]G?S?\b"   = "ì"
+
+# oën se prononçant oin : mizoën, samoëns
+"OENS?\b" = "oì"
+
+# Son final oa
+"OIST\b"       = "oa"
+"OIE(S|NT)?\b" = "oa"
+"OYEU(X\b)?"   = "oaye"
+
+# Son ou final
+"OULD\b"    = "u"
+"OUBS\b"    = "u"
+"OU[LP]T\b" = "u"
+"OULX\b"    = "u"
+
+# Son y final
+"OYES?\b"   = "oy"
+
+# Son final an (transcrit à)
+"[AE][N][GPT]S?\b" = "à"
+"ANCS?\b"          = "à"
+
+# Son ar final
+"ARD?S?\b" = "ar"
+
+# Son final jio ou djio (Corse)
+"GGIO\b"   = "jio"
+
+"CCI[AEO]?\b" = "th"
+"CCI(?=[AEO])" = "thi"
+"ECCI" = "ethi"
+
+
+"CULS?\b"  = "ku"
+
+"OEUC\b"   = "oek"
+
+"VOLD\b" = "vold"
+"BOLD\b" = "bold"
+
+################################
+# 4 lettres consécutives
+################################
+
+# ILL se prononçan il (villars, viller)
+"VILL" = "vil"
+# ILL précédé d'un son différent de i
+"(?<=[AE]U?)ILL" = "y"
+# ILL précédé du son i
+"ILL" = "iy"
+
+"AISN"   = "en"
+
+# AON de FAON, PAON, TAON, LAONNAIS...
+"(?<=[FLPT])AON(?![AEIOUYaeiouyàìò])" = "à"
+
+# Son in (transcrit ì)
+"[AE]I[NM](?![AEIOUYaeiouyàìòNMnm])" = "ì"
+"IEN(?![AEIOUYaeiouyàìòNMnm])"       = "yì"
+
+"IEUX?" = "ye"
+
+"EAUX?" = "o"
+
+# Variations autour de oe
+"KOEU"  = "koe"
+"OEUy"  = "oey"
+"OENN?" = "en"
+
+# Le TI prononcé s lorsqu'il est précédé de A et suivi d'une voyelle et d'un N
+# (National, Nation, Patient...)
+"(?<=A)TI(?=[AEOàò]N)" = "si"
+
+# Corse
+"CCHI" = "ki"
+"CCI(?=AO)" = "thy"
+
+"CUE(?=I)"      = "ke"
+
+"VOS(?=G)"      = "vo"
+
+################################
+# 3 lettres consécutives
+# en début ou en fin de mot
+################################
+
+# son i ou ie (indeterminé)
+"H?IE(S|NT)?\b" = "i"
+
+# DS final muet après I
+"IDS?\b" = "i"
+
+# YS final éventuellement précédé d'un H muet
+"((?<![CP])H)?YS\b" = "is"
+
+# rom en fin de mot : prononcer le m (drom, trégrom,...)
+"ROM\b" = "rom"
+
+# I précédé d'un H muet et suivi d'un E, d'un S ou d'un T final
+"(?<=H)I[EST]?\b" = "i"
+
+"AUX?\b"   = "o"
+"EES?\b"   = "e"
+"ERS?\b"   = "e"
+"EST\b"    = "e"
+"ETS?\b"   = "e"
+"ETZ\b"    = "es"
+"EUX?\b"   = "e"
+"ONS?\b"   = "ò"
+"OMS?\b"   = "ò"
+"OT?S?\b"  = "o"
+"OU[SX]\b" = "u"
+# OUPT doit avoir été traité avant
+"UPT\b"    = "u"
+
+
+# Son an (transcrit à)
+"EAN\b"       = "à"
+"[AE][N]S?\b" = "à"
+
+# Son in (transcrit ì)
+"(?<![BCDFGJKLMNPQRSTVWXZghs])UN\b" = "ì"
+
+# consonnes terminales muettes (à bien appliquer avant le E final muet)
+"RT?S?\b"    = "r"
+"RD?S?\b"    = "r"
+
+# PRE..., PRES... si le mot commence par PRE
+# il se prononce pré (le e n'est pas muet, même s'il est final)
+"\bPRE" = "pre"
+
+# Fin en ESC, OSC, ASC...
+"(?<=[AEIOUaeiouàìò])SC\b" = "sk"
+
+# AUX de AUXERRE, AUXOIS (le cas de \bAUX\b doit avoir été traité plus haut)
+"\bAUX" = "os"
+
+# cce corse
+"CCE\b" = "th"
+
+
+################################
+# 3 lettres consécutives
+################################
+
+# Attention, la prononciation de C dépend de la lettre et non du son suivant
+# La règle doit donc être appliquée avant la transformation du AN en à
+# C prononcé K
+"C(?=[AOU])" = "k"
+# C ou SC prononcé s
+"S?C(?=[EIYeiìy])" = "s"
+
+# HY final (H muet)
+"(?<![CP])HY" = "i"
+
+"AIE" = "e"
+"ELL" = "el"
+"ESN" = "en"
+"EUI" = "e"
+"IEU" = "ye"
+"OEU" = "e"
+"OIE" = "oa"
+"UYE" = "uye"
+
+# Son on (transcrit ò)
+"O[NM](?=[BP])"       = "ò"
+"ON(?![NAEIOUYàìò])" = "ò"
+
+# Son an (transcrit à)
+"[AE][N](?=[BCDFGJKLMPQRSTVWXZghs])"    = "à"
+"[AE][M](?=[BCDFGJKLNPQRSTVWXZghs])"    = "à"
+
+# Son in
+"[AE]?I[NM](?=[BCDFGJKLMPQRSTVWXZghs])" = "ì"
+
+# son e, é ou è s'écrivant ei, eu, ey, ai, ay, oe
+# et précédé et suivi d'une consonne
+"(?<=[BCDFGHJKLMNPQRSTVWXZgkjln])E[IUY](?=[BCDFGHJKLMNPQRSTVWXZgkjln])" = "e"
+"(?<=[BCDFGHJKLMNPQRSTVWXZgkjln])A[IY](?=[BCDFGHJKMNPQRSTVWXZgkjln])"   = "e"
+"(?<=[BCDFGHJKLMNPQRSTVWXZgkjln])OE(?=[BCDFGHJKLMNPQRSTVWXZgkjln])"     = "e"
+
+# Son u (transcrit ü)
+"(?<=[BCDFHJKLMNPRSTVWXZgkjln])UE(?=[BCDFGHJKLMNPQRSTVWXZgkjln])" = "u"
+
+# Diphtongues précédées et suivis d'une consonne
+"(?<=[BCDFGHJKLMNPQRSTVWXZgkjln])OI(?=[BCDFGHJKLMNPQRSTVWXZgkjln])" = "oa"
+"RIE(?=[BCDFGHJKLMNPQRSTVWXZgkjln])"                                = "riye"
+"(?<=[BCDFGHJKLMNPQSTVWXZgkjln])IE(?=[BCDFGHJKLMNPQRSTVWXZgkjln])"  = "ye"
+
+# Son in (transcrit ì)
+"I[NM](?=[BCDFGJKLPQRSTVWXZgkjln])" = "ì"
+
+"CHR" = "kr"
+"C?QU?(?=[AEIOYaàeiìoòy])" = "k"
+
+"GU(?![AEIOYaeiouàìò])" = "gu"
+
+#
+"SCH" = "h"
+#"SC(?=[EIYeiì])" = "s"
+# "SC(?=[AOUaoàò])" = "sk"
+"SC" = "sk"
+
+# E muet dans george, geon... (attention, faux s'il y a un accent : géo)
+"GE(?=[AOòàì])" = "j"
+
+# CU suivi d'une consonne se pronnonce kü
+"CU(?=[BCDFGHJKLMNPQRSTVWXZgkjln])" = "ku"
+
+# CC prononcé tch comme en Corse
+"(?<=[EU])CC"  = "th"
+
+# s muet en milieu de mot (isle, chesnaie, brasles,...)
+# pas vrai à tous les coups
+# remplacé par ISL, BOIS GROS...
+"(?<=[AEIOaeioàìò])S(?=[LNM])" = ""
+
+
+
+################################
+# 2 lettres consécutives
+# en début ou en fin de mot
+################################
+
+"AZ\b"    = "a"
+"[AE]Y\b" = "e"
+"OM\b"    = "om"
+"OZ\b"    = "o"
+"YS\b"    = "is"
+
+# Traité après EST (e) et avant la suppression des T et des S finaux
+"ST\b"    = "st"
+
+################################
+# 2 lettres consécutives
+################################
+
+# "(?<=H)I"      = "HI"
+
+# H muet
+"(?<![CGPS])H"   = ""
+
+"AI" = "e"
+"AU" = "o"
+"EI" = "e"
+"EU" = "e"
+"IE" = "iye"
+"II" = "i"
+"OU" = "u"
+"OO" = "u"
+
+"CH"    = "h"
+"C[KQ]" = "k"
+"CC"    = "x"
+"CX"    = "x"
+"GU"    = "g"
+"GH"    = "g"
+"GN"    = "ñ"
+"PH"    = "f"
+
+# C prononcé K
+"C(?=[ALORSTUouòà])" = "k"
+
+# C prononcé s
+"C(?=[EIYeiyì])"     = "s"
+
+# Consonne double
+"([BDFGJKLMNPRSTZ])\1"="$1"
+
+"G(?=[AOuòà])"  = "g"
+"G(?=[EIYì])" = "j"
+
+"U(?=th)"      = "u"
+
+################################
+# lettres unique
+# en début ou en fin de mot
+################################
+
+"[DT]\b"     = ""
+
+# E muet
+"(ES|E|S)\b" = ""
+
+# H muet initial
+"\bH" = ""
+
+################################
+# lettres unique
+################################
+
+"Y"="i"
+
+# s ou z --> s
+"[SZ]" = "s"
+
+# Son U
+"U" = "u"
+
+# son ou
+"W" = "u"
+
+################################
+# Incertain
+################################
+
+# e ou ex ?
+"AIX\b" = "e"
+
