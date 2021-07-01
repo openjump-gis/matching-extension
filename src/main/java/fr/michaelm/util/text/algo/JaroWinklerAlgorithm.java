@@ -41,8 +41,8 @@ public final class JaroWinklerAlgorithm implements StringDistance {
     /**
      * gets the similarity measure of the JaroWinkler metric for the given strings.
      *
-     * @param string1
-     * @param string2
+     * @param string1 first string
+     * @param string2 second string
      * @return 0-1 similarity measure of the JaroWinkler metric
      */
     public float jaroWinklerSimilarity(final String string1, final String string2) {
@@ -104,19 +104,19 @@ public final class JaroWinklerAlgorithm implements StringDistance {
 
     /**
      * returns a string buffer of characters from string1 within string2 if they are of a given
-     * distance seperation from the position in string1.
+     * distance separation from the position in string1.
      *
-     * @param string1
-     * @param string2
-     * @param distanceSep
+     * @param string1 first string
+     * @param string2 second string
+     * @param distanceSep distance separation
      * @return a string buffer of characters from string1 within string2 if they are of a given
-     *         distance seperation from the position in string1
+     *         distance separation from the position in string1
      */
-    private final static StringBuffer getCommonCharacters(final String string1, final String string2, final int distanceSep) {
+    private static StringBuffer getCommonCharacters(final String string1, final String string2, final int distanceSep) {
         //create a return buffer of characters
         final StringBuffer returnCommons = new StringBuffer();
         //create a copy of string2 for processing
-        final StringBuffer copy = new StringBuffer(string2);
+        final StringBuilder copy = new StringBuilder(string2);
         //iterate over string1
         for (int i = 0; i < string1.length(); i++) {
             final char ch = string1.charAt(i);
@@ -141,11 +141,11 @@ public final class JaroWinklerAlgorithm implements StringDistance {
     /**
      * gets the prefix length found of common characters at the begining of the strings.
      *
-     * @param string1
-     * @param string2
+     * @param string1 first string
+     * @param string2 second string
      * @return the prefix length found of common characters at the begining of the strings
      */
-    private final static int getPrefixLength(final String string1, final String string2) {
+    private static int getPrefixLength(final String string1, final String string2) {
         final int n = Math.min(MINPREFIXTESTLENGTH, Math.min(string1.length(), string2.length()));
         //check for prefix similarity of length n
         for (int i = 0; i < n; i++) {

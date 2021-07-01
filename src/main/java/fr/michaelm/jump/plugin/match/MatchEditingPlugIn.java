@@ -136,8 +136,7 @@ public class MatchEditingPlugIn extends AbstractPlugIn implements ActionListener
         
         dialog.setSideBarDescription(I18NPlug.getI18N("Match-editing-description"));
         
-        for (Object o : workbenchContext.getLayerManager().getLayers()) {
-            Layer layer = (Layer)o;
+        for (Layer layer : workbenchContext.getLayerManager().getLayers()) {
             if (layer != linkLayer && layer != sourceLayer && layer != targetLayer) {
                 layer.setSelectable(false);
                 layer.setEditable(false);
@@ -213,10 +212,8 @@ public class MatchEditingPlugIn extends AbstractPlugIn implements ActionListener
                         .getLayerViewPanel()
                         .getSelectionManager()
                         .getFeaturesWithSelectedItems(targetLayer);
-            for (Object o1 : selectedSource) {
-                Feature source = (Feature)o1;
-                for (Object o2 : selectedTarget) {
-                    Feature target = (Feature)o2;
+            for (Feature source : selectedSource) {
+                for (Feature target : selectedTarget) {
                     BasicFeature bf = new BasicFeature(linkLayer.getFeatureCollectionWrapper().getFeatureSchema());
                     Coordinate cSource = source.getGeometry().getInteriorPoint().getCoordinate();
                     Coordinate cTarget = target.getGeometry().getInteriorPoint().getCoordinate();

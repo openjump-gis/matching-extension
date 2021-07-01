@@ -77,7 +77,7 @@ public class DamarauLevenshteinDistanceMatcher extends StringMatcher {
                                                               throws Exception {
          if (source == null || target == null) return 0.0;
          // fixed on 2013-07-30
-         double distance = (double)DamarauLevenshteinDistance
+         double distance = DamarauLevenshteinDistance
                  .damarauLevenshtein(source, target, (int)max_dist+1);
          // Ex. if max_dist = 4
          // score for 5 = 0.0

@@ -33,7 +33,6 @@ import com.vividsolutions.jump.feature.Feature;
  * @author Michaël Michaud
  */
 public interface Matcher {
-
     
     /**
      * Returns a distance measuring the match quality of Feature f with a 

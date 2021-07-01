@@ -175,7 +175,7 @@ public final class StringUtil {
     */
     public static Comparator<String> INVERSE_STRING_LENGTH = new Comparator<String>(){
        public int compare(String o1, String o2) {
-          int comp = -1 * Integer.valueOf(o1.length()).compareTo(o2.length());
+          int comp = -1 * Integer.compare(o1.length(), o2.length());
           if (comp == 0) return -1*o1.compareTo(o2);
           else return comp;
        }

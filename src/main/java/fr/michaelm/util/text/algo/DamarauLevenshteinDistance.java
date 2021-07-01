@@ -34,8 +34,8 @@ public class DamarauLevenshteinDistance {
         if (lenT1 == 1) return lenS;
         if (lenS1 == 1) return lenT;
         int[] dl = workspace;
-        int dlIndex = 0;
-        int sPrevIndex = 0, tPrevIndex = 0, rowBefore = 0, min = 0, cost = 0, tmp = 0;
+        int dlIndex;
+        int sPrevIndex = 0, tPrevIndex = 0, rowBefore, min, cost, tmp;
         int tri = lenS1 + 2;
         // start row with constant
         dlIndex = 0;
@@ -205,7 +205,7 @@ public class DamarauLevenshteinDistance {
         if (lenT1 == 1) return (lenS < limit)?lenS:limit;
         int[] dl = workspace;
         int dlIndex = 0;
-        int sPrevIndex = 0, tPrevIndex = 0, rowBefore = 0, min = 0, tmp = 0, best = 0, cost = 0;
+        int sPrevIndex = 0, tPrevIndex = 0, rowBefore, min, tmp, best, cost;
         int tri = lenS1 + 2;
         // start row with constant
         dlIndex = 0;

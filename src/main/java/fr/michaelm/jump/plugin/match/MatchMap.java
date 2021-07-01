@@ -47,8 +47,8 @@ public class MatchMap {
     
     private final SortedSet<Match> EMPTY_SET = Collections.unmodifiableSortedSet(new TreeSet<Match>());
         
-    private final Map<Feature,TreeSet<Match>> sourceMap = new HashMap<Feature,TreeSet<Match>>();
-    private final Map<Feature,TreeSet<Match>> targetMap = new HashMap<Feature,TreeSet<Match>>();
+    private final Map<Feature,TreeSet<Match>> sourceMap = new HashMap<>();
+    private final Map<Feature,TreeSet<Match>> targetMap = new HashMap<>();
     
     //TODO : to improve performance, instead of maintaining 3 ordered map during 
     // the feeding (at each add call), sort the map on demand, keeping track of 
@@ -85,7 +85,7 @@ public class MatchMap {
      * Get the whole match Set.
      */
     public Set<Match> getAllMatches() {
-        Set<Match> matches = new HashSet<Match>();
+        Set<Match> matches = new HashSet<>();
         for (Feature feature : sourceMap.keySet()) matches.addAll(sourceMap.get(feature));
         return matches;
     }
@@ -206,7 +206,7 @@ public class MatchMap {
         //TreeSet<Match> filteredMatches = new TreeSet<Match>();
         // new code
         MatchMap matchMap = new MatchMap();
-        TreeSet<Match> matches = new TreeSet<Match>();
+        TreeSet<Match> matches = new TreeSet<>();
         for (Feature feature : sourceMap.keySet()) matches.addAll(sourceMap.get(feature));
         for (Match match : matches) {
             Feature source = match.getSource();

@@ -70,7 +70,6 @@ public class MatcherRegistry<T extends Matcher> {
     private final Map<String,T> map = new LinkedHashMap<>();
     
     public void register(T matcher) {
-        //map.put(matcher.toString(), matcher);
         map.put(matcher.getClass().getSimpleName(), matcher);
     }
     

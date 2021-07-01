@@ -41,18 +41,19 @@ import java.util.*;
  */
 public class FeatureCollectionMatcher {
     
-    private Collection<Feature> source;
-    private Collection<Feature> target;
-    private GeometryMatcher geometryMatcher;
-    private StringMatcher attributeMatcher;
+    private final Collection<Feature> source;
+    private final Collection<Feature> target;
+    private final GeometryMatcher geometryMatcher;
+    private final StringMatcher attributeMatcher;
+    private final TaskMonitor monitor;
+
     private MatchMap matchMap;
-    private TaskMonitor monitor;
     public boolean interrupted = false;
     
     // set n_m = true to try to match source features to several target 
     // features in one shot.
-    private boolean n_m = false;
-    private static final Matcher OVERLAP = OverlapsMatcher.instance();
+    //private boolean n_m = false;
+    //private static final Matcher OVERLAP = OverlapsMatcher.instance();
     
     /**
      * A high level matcher able to compare features from two feature 
@@ -140,7 +141,7 @@ public class FeatureCollectionMatcher {
         if (Double.isNaN(maxDistance)) maxDistance = 0.0;
         //System.out.println("Geometry Matching " + geometryMatcher + " " + maxDistance);
         long t0 = System.currentTimeMillis();
-        double minOverlapping = geometryMatcher.getMinimumOverlapping();
+        //double minOverlapping = geometryMatcher.getMinimumOverlapping();
         //System.out.println("geometryMatcher.minOverlapping = " + minOverlapping);
         monitor.report("Geometry matching : indexing features");
         STRtree index = indexFeatureCollection(target);
@@ -163,7 +164,7 @@ public class FeatureCollectionMatcher {
             // during the one-to-one match phase in order to be used and optimize
             // the phase where we try to match source with union of candidates. 
             Map<Feature,Match> oneOneMatches = null;
-            if (!singleTarget) oneOneMatches = new HashMap<Feature,Match>();
+            if (!singleTarget) oneOneMatches = new HashMap<>();
             for (Feature f2 : candidates) {
                 double score = geometryMatcher.match(f1, f2, null);
                 if (score > 0.0) {
@@ -204,7 +205,7 @@ public class FeatureCollectionMatcher {
                     // Test temporary matches from the best score to the worst,
                     // and add them to the final matchMap until f1 is completely 
                     // covered by f2 buffers
-                    SortedSet<Match> previousMatches = matchMap.getMatchesForSourceFeature(f1);
+                    //SortedSet<Match> previousMatches = matchMap.getMatchesForSourceFeature(f1);
                     for (Match match : partialMatches) {
                         Match oneOneMatch = oneOneMatches.get(match.getTarget());
                         if (oneOneMatch != null) {
@@ -235,7 +236,7 @@ public class FeatureCollectionMatcher {
             if (monitor.isCancelRequested()) {
                 interrupted = true;
                 return matchMap;
-            };
+            }
             monitor.report(++countf1, total, "features");
         }
         System.out.println("Direct Geometry Matching done in " + (System.currentTimeMillis()-t0) + " ms");
@@ -252,7 +253,7 @@ public class FeatureCollectionMatcher {
             if (g1.getDimension() == 2) return g1.getFactory().createPolygon(g1.getFactory().createLinearRing(new Coordinate[0]), null);
         }
         else {
-            List<Geometry> list = new ArrayList<Geometry>();
+            List<Geometry> list = new ArrayList<>();
             for (int i = 0 ; i < g.getNumGeometries() ; i++) {
                 if (g.getGeometryN(i).getDimension() == g1.getDimension()) {
                     list.add(g.getGeometryN(i));
@@ -272,12 +273,12 @@ public class FeatureCollectionMatcher {
     }
     
     private SortedMap<String,Collection<Feature>> indexFeatureCollection(Collection<Feature> collection, String attribute) {
-        SortedMap<String,Collection<Feature>> map = new TreeMap<String,Collection<Feature>>();
+        SortedMap<String,Collection<Feature>> map = new TreeMap<>();
         for (Feature f : collection) {
             String value = f.getString(attribute);
-            Collection coll = map.get(value);
+            Collection<Feature> coll = map.get(value);
             if (coll == null) {
-                coll = new ArrayList<Feature>();
+                coll = new ArrayList<>();
                 map.put(value, coll);
             }
             coll.add(f);
@@ -286,7 +287,7 @@ public class FeatureCollectionMatcher {
     }
     
     private Geometry union(List<Feature> features) {
-        List geom = new ArrayList();
+        List<Geometry> geom = new ArrayList<>();
         for (Feature f : features) geom.add(f.getGeometry());
         return UnaryUnionOp.union(geom);
     }
@@ -328,7 +329,7 @@ public class FeatureCollectionMatcher {
                 if (monitor.isCancelRequested()) {
                     interrupted = true;
                     return matchMap;
-                };
+                }
                 monitor.report(++count, total, "features");
             }            
             // index attribute data
@@ -336,7 +337,7 @@ public class FeatureCollectionMatcher {
         // If a geometry matching has already been done, attribute matching
         // use the resulting MatchMap from the geometry matching process 
         else {
-            List<Match> new_matches = new ArrayList<Match>();
+            List<Match> new_matches = new ArrayList<>();
             Set<Match> allMatches = matchMap.getAllMatches();
             int count = 0;
             int total = allMatches.size();
@@ -350,7 +351,7 @@ public class FeatureCollectionMatcher {
                 if (monitor.isCancelRequested()) {
                     interrupted = true;
                     return matchMap;
-                };
+                }
                 monitor.report(++count, total, "matches");
             }
             matchMap.clear();

@@ -6,7 +6,6 @@ package fr.michaelm.util.text;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
@@ -46,15 +45,12 @@ public class NamedRuleSet extends RuleSet {
             List<Rule> ruleList = new ArrayList<>();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             String line;
-            boolean comment = false;
-            int line_number = 0;
+            //boolean comment = false;
+            //int line_number = 0;
             while (null != (line = br.readLine())) {
-                line_number++;
+                //line_number++;
                 line = line.trim();
-                if (line.startsWith("//") || line.startsWith("#") || line.length()==0) {
-                    continue;
-                }
-                else {
+                if (!line.startsWith("//") && !line.startsWith("#") && line.length()>0) {
                     try {
                         ruleList.add(RuleRegistry.getRule(line));
                     } catch(RuleNotFoundException rnfe) {
@@ -68,7 +64,7 @@ public class NamedRuleSet extends RuleSet {
         } finally {
             if (is != null) {
                 try {is.close();}
-                catch(IOException e) {}
+                catch(IOException ignored) {}
             }
         }
     }

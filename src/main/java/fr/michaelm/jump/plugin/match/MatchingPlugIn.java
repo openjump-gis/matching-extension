@@ -739,8 +739,7 @@ public class MatchingPlugIn extends ThreadedBasePlugIn {
             if (transfer_best_match_only && !single_source) {
                 matchMap = matchMap.filter(true, false);
             }
-            for (Object o : target_fc.getFeatures()) {
-                Feature f = (Feature)o;
+            for (Feature f : target_fc.getFeatures()) {
                 Feature bf = new BasicFeature(new_schema);
                 Object[] attributes = new Object[new_schema.getAttributeCount()];
                 System.arraycopy(f.getAttributes(), 0, attributes, 0, target_schema.getAttributeCount());
@@ -819,8 +818,8 @@ public class MatchingPlugIn extends ThreadedBasePlugIn {
         Map<Integer,Feature> map = new HashMap<>();
         for (Feature f : features) map.put(f.getID(), f);
         List<Feature> inverse = new ArrayList<>();
-        for (Object o : fc.getFeatures()) {
-            if (!map.containsKey(((Feature)o).getID())) inverse.add((Feature)o);    
+        for (Feature feature : fc.getFeatures()) {
+            if (!map.containsKey((feature).getID())) inverse.add(feature);
         }
         return inverse;
     }

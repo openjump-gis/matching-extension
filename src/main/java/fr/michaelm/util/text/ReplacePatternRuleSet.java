@@ -6,7 +6,6 @@ package fr.michaelm.util.text;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
@@ -101,18 +100,15 @@ public class ReplacePatternRuleSet extends RuleSet {
             if (is == null) {
                 is = new FileInputStream(file);
             }
-            List<Rule> ruleList = new ArrayList<Rule>();
+            List<Rule> ruleList = new ArrayList<>();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             String line;
-            boolean comment = false;
+            //boolean comment = false;
             int line_number = 0;
             while (null != (line = br.readLine())) {
                 line_number++;
                 line = line.trim();
-                if (line.startsWith("//") || line.startsWith("#") || line.length()==0) {
-                    continue;
-                }
-                else {
+                if (!line.startsWith("//") && !line.startsWith("#") && line.length()>0) {
                     try {
                         String[] tokens = line.split("\"[ ]*=[ ]*\"");
                         if (tokens.length == 2) {
@@ -145,7 +141,7 @@ public class ReplacePatternRuleSet extends RuleSet {
         } finally {
             if (is != null) {
                 try {is.close();}
-                catch(IOException e) {}
+                catch(IOException ignored) {}
             }
         }
     }

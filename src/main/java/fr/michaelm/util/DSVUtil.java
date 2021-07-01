@@ -120,7 +120,7 @@ public final class DSVUtil {
     
     public static void createRandomDSVFile(String fileName, char delimiter,
                                            int nbLines, int nbFields) 
-                                      throws FileNotFoundException, IOException{
+                                      throws IOException {
         String[] strings = new String[]{
             "eeeeeeeeeeeeeeeeeeeeeeeeeeee ssssssssssssssss aaaaaaaaaaaaaaa iiiiiiiiiiiiiii tttttttttttttt nnnnnnnnnnnnnn rrrrrrrrrrrrr uuuuuuuuuuuuu lllllllllll ooooooooooo ddddddd ccccccc pppppp mmmmmm éééé vvv qqq ff bb gg hh j à x y è ë z w ç ù k î œ ï ë",
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ",

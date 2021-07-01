@@ -54,8 +54,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -396,8 +394,7 @@ public class MatchingUpdatePlugIn extends ThreadedBasePlugIn {
         MatchMap matchMap = matcher.getMatchMap();
         Map<Integer,Feature> srcMap = getFeatureMap(source_layer);
         Map<Integer,Feature> tgtMap = getFeatureMap(target_layer);
-        for (Object o : link_layer.getFeatureCollectionWrapper().getFeatures()) {
-            Feature f = (Feature)o;
+        for (Feature f : link_layer.getFeatureCollectionWrapper().getFeatures()) {
             matchMap.add(new Match(
                 srcMap.get(f.getAttribute("SOURCE")),
                 tgtMap.get(f.getAttribute("TARGET")), 
@@ -449,8 +446,7 @@ public class MatchingUpdatePlugIn extends ThreadedBasePlugIn {
             if (transfer_best_match_only && !single_source) {
                 matchMap = matchMap.filter(true, false);
             }
-            for (Object o : target_fc.getFeatures()) {
-                Feature f = (Feature)o;
+            for (Feature f : target_fc.getFeatures()) {
                 Feature bf = new BasicFeature(new_schema);
                 Object[] attributes = new Object[new_schema.getAttributeCount()];
                 System.arraycopy(f.getAttributes(), 0, attributes, 0, target_schema.getAttributeCount());
@@ -514,8 +510,8 @@ public class MatchingUpdatePlugIn extends ThreadedBasePlugIn {
         Map<Integer,Feature> map = new HashMap<>();
         for (Feature f : features) map.put(f.getID(), f);
         List<Feature> inverse = new ArrayList<>();
-        for (Object o : fc.getFeatures()) {
-            if (!map.containsKey(((Feature)o).getID())) inverse.add((Feature)o);    
+        for (Feature feature : fc.getFeatures()) {
+            if (!map.containsKey((feature).getID())) inverse.add(feature);
         }
         return inverse;
     }
@@ -568,8 +564,7 @@ public class MatchingUpdatePlugIn extends ThreadedBasePlugIn {
     
     private Map<Integer,Feature> getFeatureMap(Layer layer) {
         Map<Integer,Feature> map = new HashMap<>();
-        for (Object o : layer.getFeatureCollectionWrapper().getFeatures()) {
-            Feature f = (Feature)o;
+        for (Feature f : layer.getFeatureCollectionWrapper().getFeatures()) {
             map.put(f.getID(), f);
         }
         return map;

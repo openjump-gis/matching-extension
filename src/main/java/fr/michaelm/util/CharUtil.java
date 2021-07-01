@@ -141,7 +141,7 @@ public final class CharUtil {
                 String s2 = table[16*i+j];
                 sb.append(format(s1, "/", s2, 6));
             }
-            System.out.println(sb.toString());
+            System.out.println(sb);
         }
     }
     

@@ -55,7 +55,7 @@ public class ReplacePatternRule extends AbstractRule {
             return s == null ? null:_pattern.matcher(s).replaceAll(_replacement);
         } catch(IndexOutOfBoundsException e) {
             throw new TransformationException(
-                "Exception using pattern " + _pattern.toString() +
+                "Exception using pattern " + _pattern +
                 ": the replacement string \"" + _replacement +
                 "\" refers to a capturing group that does not exist in the pattern");
         }

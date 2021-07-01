@@ -13,7 +13,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -113,7 +112,6 @@ public final class DSVFileSorter {
                         break;
                     }
                     else if (line.trim().length() == 0) {
-                        continue;
                     }
                     else {
                         row = delimiterPattern.split(line, -1);

@@ -7,7 +7,6 @@ package fr.michaelm.util.text;
 import fr.michaelm.util.StringUtil;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
