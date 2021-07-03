@@ -22,8 +22,11 @@
 
 package fr.michaelm.jump.plugin.match;
 
+import com.vividsolutions.jump.I18N;
 import com.vividsolutions.jump.workbench.plugin.Extension;
 import com.vividsolutions.jump.workbench.plugin.PlugInContext;
+
+import java.io.File;
 
 /**
  * Extension containing matching processing also known as join.
@@ -69,6 +72,9 @@ import com.vividsolutions.jump.workbench.plugin.PlugInContext;
 // 0.5.1 (2011-12-04) : small fix in i18n
 // 0.5   (2011-12-01) : initial version
 public class MatchingExtension extends Extension {
+
+    public static I18N I18NPlug = I18N.getInstance(
+        new File("fr/michaelm/jump/plugin/match"));
 
     public String getName() {
         return "Matching Extension (Michaël Michaud)";

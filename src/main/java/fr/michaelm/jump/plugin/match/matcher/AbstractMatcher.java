@@ -23,8 +23,9 @@
 package fr.michaelm.jump.plugin.match.matcher;
 
 import com.vividsolutions.jump.feature.Feature;
-import fr.michaelm.jump.plugin.match.I18NPlug;
 import fr.michaelm.jump.plugin.match.Matcher;
+
+import static fr.michaelm.jump.plugin.match.MatchingExtension.I18NPlug;
 
 /**
  * Abstract Matcher implementing common methods
@@ -53,7 +54,7 @@ public abstract class AbstractMatcher implements Matcher {
      * Returns the name of this Matcher
      */
      public String toString() {
-         return I18NPlug.getI18N("matcher." + getClass().getSimpleName());
+         return I18NPlug.get("matcher." + getClass().getSimpleName());
      }
      
     /**

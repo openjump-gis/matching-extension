@@ -66,56 +66,58 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
+import static fr.michaelm.jump.plugin.match.MatchingExtension.I18NPlug;
+
 /**
  * PlugIn to find features from a layer matching features of another layer. 
  * @author Michaël Michaud
  */
 public class MatchingUpdatePlugIn extends ThreadedBasePlugIn {
     
-    private final String MATCHING                     = I18NPlug.getI18N("Matching");
-    private final String MATCHING_OPTIONS             = I18NPlug.getI18N("Matching-options");
+    private final String MATCHING                     = I18NPlug.get("Matching");
+    private final String MATCHING_OPTIONS             = I18NPlug.get("Matching-options");
     
-    private final String MATCHING_UPDATE              = I18NPlug.getI18N("Matching-update");
+    private final String MATCHING_UPDATE              = I18NPlug.get("Matching-update");
 
     // Source layer
-    private final String SOURCE_LAYER                 = I18NPlug.getI18N("Source-layer");
-    private final String SOURCE_LAYER_TOOLTIP         = I18NPlug.getI18N("Source-layer-tooltip");
-    private final String SINGLE_SOURCE                = I18NPlug.getI18N("Single-source");
-    private final String SINGLE_SOURCE_TOOLTIP        = I18NPlug.getI18N("Single-source-tooltip");
+    private final String SOURCE_LAYER                 = I18NPlug.get("Source-layer");
+    private final String SOURCE_LAYER_TOOLTIP         = I18NPlug.get("Source-layer-tooltip");
+    private final String SINGLE_SOURCE                = I18NPlug.get("Single-source");
+    private final String SINGLE_SOURCE_TOOLTIP        = I18NPlug.get("Single-source-tooltip");
     
     // Target layer
-    private final String TARGET_LAYER                 = I18NPlug.getI18N("Target-layer");
-    private final String TARGET_LAYER_TOOLTIP         = I18NPlug.getI18N("Target-layer-tooltip");
-    private final String SINGLE_TARGET                = I18NPlug.getI18N("Single-target");
-    private final String SINGLE_TARGET_TOOLTIP        = I18NPlug.getI18N("Single-target-tooltip");
+    private final String TARGET_LAYER                 = I18NPlug.get("Target-layer");
+    private final String TARGET_LAYER_TOOLTIP         = I18NPlug.get("Target-layer-tooltip");
+    private final String SINGLE_TARGET                = I18NPlug.get("Single-target");
+    private final String SINGLE_TARGET_TOOLTIP        = I18NPlug.get("Single-target-tooltip");
     
     // Link layer
-    private final String LINK_LAYER                   = I18NPlug.getI18N("Link-layer");
-    private final String LINK_LAYER_TOOLTIP           = I18NPlug.getI18N("Link-layer-tooltip");
+    private final String LINK_LAYER                   = I18NPlug.get("Link-layer");
+    private final String LINK_LAYER_TOOLTIP           = I18NPlug.get("Link-layer-tooltip");
     
     
     // Output options
-    private final String OUTPUT_OPTIONS               = I18NPlug.getI18N("Output-options");
-    private final String COPY_MATCHING_FEATURES       = I18NPlug.getI18N("Copy-matching-features");
-    private final String COPY_NOT_MATCHING_FEATURES   = I18NPlug.getI18N("Copy-not-matching-features");
+    private final String OUTPUT_OPTIONS               = I18NPlug.get("Output-options");
+    private final String COPY_MATCHING_FEATURES       = I18NPlug.get("Copy-matching-features");
+    private final String COPY_NOT_MATCHING_FEATURES   = I18NPlug.get("Copy-not-matching-features");
 
     // Attribute transfer / aggregation
-    private final String TRANSFER_OPTIONS               = I18NPlug.getI18N("Transfer-options");
-    private final String TRANSFER_TO_REFERENCE_LAYER    = I18NPlug.getI18N("Transfer-to-reference-layer");
-    private final String TRANSFER_BEST_MATCH_ONLY       = I18NPlug.getI18N("Transfer-best-match-only");
+    private final String TRANSFER_OPTIONS               = I18NPlug.get("Transfer-options");
+    private final String TRANSFER_TO_REFERENCE_LAYER    = I18NPlug.get("Transfer-to-reference-layer");
+    private final String TRANSFER_BEST_MATCH_ONLY       = I18NPlug.get("Transfer-best-match-only");
     
-    private final String STRING_AGGREGATION             = I18NPlug.getI18N("String-aggregation");
-    private final String INTEGER_AGGREGATION            = I18NPlug.getI18N("Integer-aggregation");
-    private final String LONG_AGGREGATION               = I18NPlug.getI18N("Long-aggregation");
-    private final String DOUBLE_AGGREGATION             = I18NPlug.getI18N("Double-aggregation");
-    private final String DATE_AGGREGATION               = I18NPlug.getI18N("Date-aggregation");
-    private final String BOOLEAN_AGGREGATION            = I18NPlug.getI18N("Boolean-aggregation");
+    private final String STRING_AGGREGATION             = I18NPlug.get("String-aggregation");
+    private final String INTEGER_AGGREGATION            = I18NPlug.get("Integer-aggregation");
+    private final String LONG_AGGREGATION               = I18NPlug.get("Long-aggregation");
+    private final String DOUBLE_AGGREGATION             = I18NPlug.get("Double-aggregation");
+    private final String DATE_AGGREGATION               = I18NPlug.get("Date-aggregation");
+    private final String BOOLEAN_AGGREGATION            = I18NPlug.get("Boolean-aggregation");
 
     // Processing and Error messages
-    private final String SEARCHING_MATCHES              = I18NPlug.getI18N("Searching-matches");
-    private final String MISSING_INPUT_LAYER            = I18NPlug.getI18N("Missing-input-layer");
-    private final String WARNING                        = I18NPlug.getI18N("Warning");
-    private final String INVALID_LINK_LAYER             = I18NPlug.getI18N("Invalid-link-layer");
+    private final String SEARCHING_MATCHES              = I18NPlug.get("Searching-matches");
+    private final String MISSING_INPUT_LAYER            = I18NPlug.get("Missing-input-layer");
+    private final String WARNING                        = I18NPlug.get("Warning");
+    private final String INVALID_LINK_LAYER             = I18NPlug.get("Invalid-link-layer");
     
     
     // Parameters : source layer and cardinality
@@ -407,14 +409,14 @@ public class MatchingUpdatePlugIn extends ThreadedBasePlugIn {
         if (copy_matching_features) {
             Layer lyr = createLayer(
                 features, context,
-                source_layer.getName() + "-" + I18NPlug.getI18N("matched"));
+                source_layer.getName() + "-" + I18NPlug.get("matched"));
             if (lyr != null) setMatchingStyle(lyr);
         }
         if (copy_not_matching_features) {
             Layer lyr = createLayer(
                 inverse(source_layer.getFeatureCollectionWrapper(), features), 
                 context, 
-                source_layer.getName() + "-" + I18NPlug.getI18N("un-matched"));
+                source_layer.getName() + "-" + I18NPlug.get("un-matched"));
             if (lyr != null) setNotMatchingStyle(lyr);
         }
 
@@ -585,7 +587,7 @@ public class MatchingUpdatePlugIn extends ThreadedBasePlugIn {
                   return schema.hasAttribute("SOURCE") &&
                          schema.hasAttribute("TARGET") &&
                          schema.hasAttribute("SCORE") ? 
-                      null : I18NPlug.getI18N("Invalid-link-layer");
+                      null : I18NPlug.get("Invalid-link-layer");
               }
           });
     }
