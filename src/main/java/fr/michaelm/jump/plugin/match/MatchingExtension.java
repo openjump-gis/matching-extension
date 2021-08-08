@@ -22,18 +22,17 @@
 
 package fr.michaelm.jump.plugin.match;
 
-import com.vividsolutions.jump.I18N;
 import com.vividsolutions.jump.workbench.plugin.Extension;
 import com.vividsolutions.jump.workbench.plugin.PlugInContext;
 
-import java.io.File;
 
 /**
  * Extension containing matching processing also known as join.
  * @author Michaël Michaud
- * @version 1.0.1 (2021-06-30)
+ * @version 1.1.0 (2021-08-08)
  */ 
 // History
+// 1.1.0 (2021-08-08) : refactoring for new I18N management
 // 1.0.1 (2021-06-30) : minor clean-up and I18N correction
 // 1.0.0 (2021-04-04) : first version compatible with OpenJUMP 2.0
 // 0.8.2 (2019-12-30) : fixes 2 UI bugs (setting of geometry matcher parameters
@@ -73,15 +72,12 @@ import java.io.File;
 // 0.5   (2011-12-01) : initial version
 public class MatchingExtension extends Extension {
 
-    public static I18N I18NPlug = I18N.getInstance(
-        new File("fr/michaelm/jump/plugin/match"));
-
     public String getName() {
         return "Matching Extension (Michaël Michaud)";
     }
 
     public String getVersion() {
-        return "1.0.1 (2021-06-30)";
+        return "1.1.0 (2021-08-08)";
     }
 
     public void configure(PlugInContext context) throws Exception {

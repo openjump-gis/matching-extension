@@ -23,6 +23,7 @@
 package fr.michaelm.jump.plugin.match;
 
 
+import com.vividsolutions.jump.I18N;
 import com.vividsolutions.jump.feature.BasicFeature;
 import com.vividsolutions.jump.feature.Feature;
 import com.vividsolutions.jump.feature.FeatureSchema;
@@ -46,20 +47,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
 
-import static fr.michaelm.jump.plugin.match.MatchingExtension.I18NPlug;
-
 
 /**
  * PlugIn to find features from a layer matching features of another layer. 
  * @author Michaël Michaud
  */
 public class MatchEditingPlugIn extends AbstractPlugIn implements ActionListener {
+
+    private static final I18N i18n = I18N.getInstance("fr.michaelm.jump.plugin.match");
     
-    private final String MATCH_EDITING = I18NPlug.get("Match-editing");
-    private final String MATCHING      = I18NPlug.get("Matching");
-    private final String LINK_LAYER    = I18NPlug.get("Links");
-    private final String SOURCE_LAYER  = I18NPlug.get("Source-layer");
-    private final String TARGET_LAYER  = I18NPlug.get("Target-layer");
+    private final String MATCH_EDITING = i18n.get("Match-editing");
+    private final String MATCHING      = i18n.get("Matching");
+    private final String LINK_LAYER    = i18n.get("Links");
+    private final String SOURCE_LAYER  = i18n.get("Source-layer");
+    private final String TARGET_LAYER  = i18n.get("Target-layer");
     
     private WorkbenchContext workbenchContext = null;
     private Layer linkLayer   = null;
@@ -109,9 +110,9 @@ public class MatchEditingPlugIn extends AbstractPlugIn implements ActionListener
                 sourceLayer.getName(), 24, null, null);
             sourceTextField.setEditable(false);
         } else {
-            JOptionPane.showMessageDialog(context.getWorkbenchFrame(), 
-                I18NPlug.get("Missing-source-layer"),
-                I18NPlug.get("Missing-layer"), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(context.getWorkbenchFrame(),
+                i18n.get("Missing-source-layer"),
+                i18n.get("Missing-layer"), JOptionPane.ERROR_MESSAGE);
             return false;
         }
         
@@ -121,22 +122,22 @@ public class MatchEditingPlugIn extends AbstractPlugIn implements ActionListener
             JTextField targetTextField = dialog.addTextField(TARGET_LAYER, targetLayer.getName(), 24, null, null);
             targetTextField.setEditable(false);
         } else {
-            JOptionPane.showMessageDialog(context.getWorkbenchFrame(), 
-                I18NPlug.get("Missing-target-layer"),
-                I18NPlug.get("Missing-layer"), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(context.getWorkbenchFrame(),
+                i18n.get("Missing-target-layer"),
+                i18n.get("Missing-layer"), JOptionPane.ERROR_MESSAGE);
             return false;
         }
         
         
-        JButton createLinksButton = dialog.addButton(I18NPlug.get("Create-links-label"), I18NPlug.get("Create-links"), "");
+        JButton createLinksButton = dialog.addButton(i18n.get("Create-links-label"), i18n.get("Create-links"), "");
         createLinksButton.addActionListener(this);
         createLinksButton.setActionCommand("link");
         
-        JButton updateMatchesButton = dialog.addButton(I18NPlug.get("Update-matches"), I18NPlug.get("Update-matches"), "");
+        JButton updateMatchesButton = dialog.addButton(i18n.get("Update-matches"), i18n.get("Update-matches"), "");
         updateMatchesButton.addActionListener(this);
         updateMatchesButton.setActionCommand("update");
         
-        dialog.setSideBarDescription(I18NPlug.get("Match-editing-description"));
+        dialog.setSideBarDescription(i18n.get("Match-editing-description"));
         
         for (Layer layer : workbenchContext.getLayerManager().getLayers()) {
             if (layer != linkLayer && layer != sourceLayer && layer != targetLayer) {
@@ -199,7 +200,7 @@ public class MatchEditingPlugIn extends AbstractPlugIn implements ActionListener
                   return schema.hasAttribute("SOURCE") &&
                          schema.hasAttribute("TARGET") &&
                          schema.hasAttribute("SCORE") ? 
-                      null : I18NPlug.get("Invalid-link-layer");
+                      null : i18n.get("Invalid-link-layer");
               }
           });
     }
