@@ -32,6 +32,7 @@ import com.vividsolutions.jump.workbench.plugin.PlugInContext;
  * @version 1.1.0 (2021-08-08)
  */ 
 // History
+// 2.0.0 (2021-08-22) : simple alignment with OpenJUMP's 2.0.0 version number
 // 1.1.0 (2021-08-08) : refactoring for new I18N management
 // 1.0.1 (2021-06-30) : minor clean-up and I18N correction
 // 1.0.0 (2021-04-04) : first version compatible with OpenJUMP 2.0
